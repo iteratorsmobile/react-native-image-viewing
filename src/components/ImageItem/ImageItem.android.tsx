@@ -15,6 +15,7 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
 } from "react-native";
+import FastImage from 'react-native-fast-image'
 
 import useImageDimensions from "../../hooks/useImageDimensions";
 import usePanResponder from "../../hooks/usePanResponder";
@@ -38,6 +39,8 @@ type Props = {
   swipeToCloseEnabled?: boolean;
   doubleTapToZoomEnabled?: boolean;
 };
+
+const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
 
 const ImageItem = ({
   imageSrc,
@@ -127,11 +130,11 @@ const ImageItem = ({
         onScrollEndDrag,
       })}
     >
-      <Animated.Image
+      <AnimatedFastImage
         {...panHandlers}
         source={imageSrc}
         style={imageStylesWithOpacity}
-        onLoad={onLoaded}
+        onLoadEnd={onLoaded}
       />
       {(!isLoaded || !imageDimensions) && <ImageLoading />}
     </Animated.ScrollView>
